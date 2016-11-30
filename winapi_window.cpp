@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <iostream>
 #include <string.h>
+#include <cstdlib>
 using namespace std;
 
 LPCWSTR ClassName = L"Klasa WINAPI"; 
@@ -11,8 +12,20 @@ HWND txtBoxGTC, txtBoxSTC , txtBoxT1, txtBoxT2, txtBoxT3, txtBoxT4, txtBoxT5;
 int czasGTC;
 char Str_INTERVAL[10];	
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+#define ID_timer 1
 
+
+void CALLBACK TimerProc(HWND hwnd, UINT msg, UINT nIDEvent, DWORD dwTime)
+{
+	LockWorkStation();
+	KillTimer(hwnd,ID_timer);
+	
+	
+	
+	
+}
+
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 void Odliczanie(LPWSTR czas)
 {
@@ -21,6 +34,7 @@ void Odliczanie(LPWSTR czas)
 	
 	czasK = wcstod(czas, NULL);
 	roznica=czasK - czasGTC;
+
 	if (roznica<0) MessageBox(NULL, L"Podany czas juz minal!", L"Upss...", MB_OK);
 	else 
 	{
@@ -31,12 +45,10 @@ void Odliczanie(LPWSTR czas)
 		std::wstring s = buf;
 		a = (LPCWSTR)s.c_str();
 		SetWindowText(txtBoxT4, a);
-
-		while (GetTickCount64()<czasK) ; 
-	
-		MessageBox(NULL, L"Koniec psot!!", L"Alert", MB_OK);
-		LockWorkStation();  
+		SetTimer( hwnd, ID_timer, roznica, TimerProc);
+		
 	}
+
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
@@ -88,7 +100,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		MessageBox( NULL, L"Bond", L"Okno nie chce sie pojawic", MB_ICONEXCLAMATION );
 	 return 1;
 	}
-
+	
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
 		TranslateMessage(&msg);
@@ -106,7 +118,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			DestroyWindow(hwnd);
 			break;       
 		case WM_DESTROY:
+			
 			PostQuitMessage(0);
+
 			break;
 		case WM_COMMAND:		   
 			if ((HWND) lParam == btnO) 
@@ -125,15 +139,18 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				if (GetWindowText(txtBoxSTC, buf, l+1))	
 				{
 					Odliczanie(buf); 
-					GlobalFree(buf);					
-				} 
+				}
+
 				else MessageBox(NULL, L"Podaj wartosc!!!", L"B£¥D", MB_SYSTEMMODAL | MB_OK); 
+
 				
 			}
+
 			break;
+
        default:
+
 			return DefWindowProc(hwnd, msg, wParam, lParam);
     }   
     return 0;
-}
-
+}			
