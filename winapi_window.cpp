@@ -17,9 +17,9 @@ char Str_INTERVAL[10];
 
 void CALLBACK TimerProc(HWND hwnd, UINT msg, UINT nIDEvent, DWORD dwTime)
 {
-	LockWorkStation();
-	KillTimer(hwnd,ID_timer);
 	
+	KillTimer(hwnd,ID_timer);
+	LockWorkStation();
 	
 	
 	
@@ -74,7 +74,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	btnO =  CreateWindowEx(0, L"BUTTON", L"Odswiez", WS_CHILD|WS_VISIBLE, 350, 5, 100, 30, hwnd, NULL, hInstance, NULL);
 	txtBoxT1 = CreateWindowEx(SS_GRAYFRAME, L"STATIC", L"Czas od uruchomienia komputera (ms):" , WS_CHILD|WS_VISIBLE, 5, 5, 260, 30, hwnd, NULL, hInstance, NULL);
 	txtBoxGTC = CreateWindowEx(SS_GRAYFRAME, L"STATIC", NULL , WS_CHILD|WS_VISIBLE, 265,5, 80, 30, hwnd, NULL, hInstance, NULL);
-	txtBoxT2 = CreateWindowEx(SS_GRAYFRAME, L"STATIC", L"Kiedy ma siê zatrzymac (ms):" , WS_CHILD|WS_VISIBLE, 5, 45, 260, 30, hwnd, NULL, hInstance, NULL);	
+	txtBoxT2 = CreateWindowEx(SS_GRAYFRAME, L"STATIC", L"Kiedy ma siÃª zatrzymac (ms):" , WS_CHILD|WS_VISIBLE, 5, 45, 260, 30, hwnd, NULL, hInstance, NULL);	
 	txtBoxSTC = CreateWindowEx(SS_GRAYFRAME, L"EDIT", NULL , WS_CHILD|WS_VISIBLE|WS_BORDER, 265,45, 80, 30, hwnd, NULL, hInstance, NULL);
 	btnW =  CreateWindowEx(0, L"BUTTON", L"Wczytaj", WS_CHILD|WS_VISIBLE, 350, 45, 100, 30, hwnd, NULL, hInstance, NULL);
 	txtBoxT3 = CreateWindowEx(SS_GRAYFRAME, L"STATIC", L"Zatrzyma sie za (ms):" , WS_CHILD|WS_VISIBLE, 5, 85, 260, 30, hwnd, NULL, hInstance, NULL);	
@@ -141,7 +141,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					Odliczanie(buf); 
 				}
 
-				else MessageBox(NULL, L"Podaj wartosc!!!", L"B£¥D", MB_SYSTEMMODAL | MB_OK); 
+				else MessageBox(NULL, L"Podaj wartosc!!!", L"BÂ£Â¥D", MB_SYSTEMMODAL | MB_OK); 
 
 				
 			}
